@@ -5,9 +5,10 @@ const express = require("express"),
     cookieParser = require("cookie-parser"),
     fs = require("fs"),
     { spawn } = require("child_process"),
-    crypto = require("crypto");
+    crypto = require("crypto"),
+    { spawnSync } = require("child_process");
 
-//let download = spawn("pip3", ["install", "yt-dlp"]);
+const download = spawn("pip3", ["install", "yt-dlp"]);
 let users = JSON.parse(fs.readFileSync("pass.json", "utf8"));
 let tar_URL = "/";
 const app = express();
