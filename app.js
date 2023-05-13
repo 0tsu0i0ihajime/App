@@ -8,7 +8,7 @@ const express = require("express"),
     crypto = require("crypto"),
     { spawnSync } = require("child_process");
 
-const download = spawn("pip3", ["install", "yt-dlp"]);
+const download = spawnSync("pip3", ["install", "yt-dlp"]);
 let users = JSON.parse(fs.readFileSync("pass.json", "utf8"));
 let tar_URL = "/";
 const app = express();
