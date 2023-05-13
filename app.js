@@ -9,6 +9,12 @@ const express = require("express"),
     { spawnSync } = require("child_process");
 
 const download = spawnSync("pip3", ["install", "yt-dlp"]);
+if (download.error) {
+  console.error(`Error: ${download.error}`);
+} else {
+  console.log(`stdout: ${download.stdout}`);
+  console.error(`stderr: ${download.stderr}`);
+}
 let users = JSON.parse(fs.readFileSync("pass.json", "utf8"));
 let tar_URL = "/";
 const app = express();
