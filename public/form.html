@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        h1 {
+            color: whitesmoke;
+            text-align: center;
+        }
+
+        body {
+            background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/fancy-cushion.png");
+        }
+
+        .inputText {
+            /* background-color:transparent; */
+            background-color: rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+        }
+
+        .wi {
+            font-size: 13px;
+            padding: 10px;
+            width: 70%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            border-color: rgb(58, 228, 219);
+            background-color: rgb(226, 245, 54);
+            outline: none;
+        }
+
+        input:valid {
+            background-color: white;
+        }
+
+        .Btn {
+            color: black;
+        }
+
+        .Btn:focus {
+            background-color: chartreuse;
+        }
+
+        .Btn:hover {
+            background-color: chartreuse;
+        }
+
+        #LoginForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        #Icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .subMit {
+            opacity: 0.5;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .orbit-spinner,
+        .orbit-spinner * {
+            box-sizing: border-box;
+        }
+
+        .orbit-spinner {
+            width: 50vw;
+            height: 50vw;
+            max-width: 50vh;
+            max-height: 50vh;
+            border-radius: 50%;
+            perspective: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-spinner .orbit {
+            position: absolute;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .orbit-spinner .orbit:nth-child(1) {
+            left: 0%;
+            right: 0%;
+            animation: orbit-spinner-orbit-one-animation 500ms linear infinite;
+            border-bottom: 3px solid #ff1d5e;
+        }
+
+        .orbit-spinner .orbit:nth-child(2) {
+            left: 0%;
+            right: 0%;
+            animation: orbit-spinner-orbit-two-animation 650ms linear infinite;
+            border-bottom: 3px solid #002efd;
+        }
+
+        .orbit-spinner .orbit:nth-child(3) {
+            left: 0%;
+            right: 0%;
+            animation: orbit-spinner-orbit-three-animation 800ms linear infinite;
+            border-bottom: 3px solid chartreuse;
+        }
+
+        @keyframes orbit-spinner-orbit-one-animation {
+            0% {
+                transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes orbit-spinner-orbit-two-animation {
+            0% {
+                transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes orbit-spinner-orbit-three-animation {
+            0% {
+                transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+            }
+        }
+    </style>
+    <title>Login Form</title>
+</head>
+
+<body>
+    <h1>Login Form</h1>
+    <form action="/login" method="post" id="LoginForm">
+        <input type="text" name="username" placeholder="Username" required="required" class="inputText wi" />
+        <input type="password" name="password" placeholder="Password" required="required" class="inputText wi" />
+        <input type="submit" value="Login" id="submitBtn" class="Btn wi" />
+        <div class="hide" id="loading">
+            <div class="orbit-spinner" id="Icon">
+                <div class="orbit"></div>
+                <div class="orbit"></div>
+                <div class="orbit"></div>
+            </div>
+        </div>
+    </form>
+</body>
+<script>
+    const form = document.getElementById("LoginForm");
+    const BTN = document.getElementById("submitBtn");
+    const loading = document.getElementById("loading");
+
+    form.addEventListener("submit", () => {
+        loading.classList.remove("hide");
+        from.classList.add("subMit");
+        BTN.disabled = true;
+    });
+</script>
+
+</html>
