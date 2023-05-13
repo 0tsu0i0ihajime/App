@@ -213,6 +213,8 @@ app.get("/send", (req, res) => {
 app.post("/song-end", (req, res) => {
     const { sessionId } = req.cookies;
     const Tar = path.join(__dirname, 'public', sessionId, 'send.html')
+    const jsonPath = path.join(__dirname, 'public', sessionId, 'data.json'); 
+    const jsonData = JSON.parse(jsonPath);
     const content = `<!DOCTYPE html>
         <html lang="ja">
         
