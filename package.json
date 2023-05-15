@@ -27,6 +27,6 @@
     "node",
     "glitch",
     "express",
-    "redis"
+    "stream"
   ]
 }
