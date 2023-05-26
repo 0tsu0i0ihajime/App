@@ -20,7 +20,7 @@ let users = JSON.parse(fs.readFileSync("username.json", "utf8"));
 let tar_URL = "/";
 const app = express();
 
-fs.watch("pass.json", (event, filename) => {
+fs.watch("username.json", (event, filename) => {
     if (event === "change") {
         console.log(`${filename}change!`);
         users = JSON.parse(fs.readFileSync("username.json", "utf8"));
