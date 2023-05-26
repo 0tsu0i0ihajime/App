@@ -110,7 +110,7 @@ app.get("/send", (req, res) => {
         jsonData.fileName = filepath;
         const nextUrl = json.url.replace(/'/g, '"')[tarNumber];
         const audioPath = filepath.replace(/^public\/[^/]+\//, './.data/');
-        const Tar = path.join(__dirname, 'public', sessionId, `send${req.session.Number}.html`);
+        const Tar = path.join(__dirname, 'public', sessionId, `send${tarNumber}.html`);
         let outputData = []
         const args = [
             "-o",
