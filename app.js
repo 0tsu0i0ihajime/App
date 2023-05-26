@@ -29,7 +29,7 @@ fs.watch("username.json", (event, filename) => {
 });
 let pass = []
 for i in range(len(users)):
-	pass[i] = process.env[`$(users[i])_pass]
+	pass[i] = process.env[`$(users[i])_pass`]
 app.use(
     session({
         secret: "My Secret Key: Common",
