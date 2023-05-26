@@ -6,7 +6,8 @@ const express = require("express"),
     fs = require("fs"),
     { spawn } = require("child_process"),
     crypto = require("crypto"),
-    { spawnSync } = require("child_process");
+    { spawnSync } = require("child_process"),
+    require('dotenv').config();
 
 const download = spawnSync("pip3", ["install", "yt-dlp"]);
 if (download.error) {
@@ -15,7 +16,7 @@ if (download.error) {
   console.log(`stdout: ${download.stdout}`);
   console.error(`stderr: ${download.stderr}`);
 }
-let users = JSON.parse(fs.readFileSync("pass.json", "utf8"));
+let users = JSON.parse(fs.readFileSync("username.json", "utf8"));
 let tar_URL = "/";
 const app = express();
 
