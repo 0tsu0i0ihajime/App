@@ -105,6 +105,19 @@ app.get("/send", (req, res) => {
         const { sessionId } = req.cookies;
         const tarNumber = req.session.Number;
         tarNumber += 1;
+        const folderPath = path.join(__dirname, 'public', sessionId);
+        const files = fs.readdirSync(folderPath);
+        files.forEach(file => {
+          const delPath = path.join(folderPath, file);
+          const stats = fs.statSync(delPath);
+          if(stats.isDirectory()){
+            deleteFileRecursively(delPath);
+        	} else {
+            if(['.mp3', '.webm'].includes(path.extname(file))){
+              fs.unlinkSync(delPath);
+          	}
+        	}
+        });
         const jsonPath = path.join(__dirname, 'public', sessionId, 'data.json');
         const jsonData = JSON.parse(jsonPath);
         jsonData.fileName = filepath;
