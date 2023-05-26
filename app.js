@@ -287,20 +287,22 @@ app.get("/play", (req, res) => {
     const targetString = "[ExtractAudio] Destination: ";
     const url = req.session.url;
     const { sessionId } = req.cookies;
-    const folderPath = path.join(__dirname, 'public', sessionId);
-    const files = fs.readdirSync(folderPath);
-  	files.forEach(file => {
-    	const delPath = path.join(folderPath, file);
-    	const stats = fs.statSync(delPath);
-      if(stats.isDirectory()){
-      	deleteFileRecursively(delPath);
-      } else {
-      	if(['.mp3', '.webm'].includes(path.extname(file))){
-        	fs.unlinkSync(delPath);
+    if(fs.existsSync(`public/${sessionId}`)){
+    	const folderPath = path.join(__dirname, 'public', sessionId);
+    	const files = fs.readdirSync(folderPath);
+  		files.forEach(file => {
+    		const delPath = path.join(folderPath, file);
+    		const stats = fs.statSync(delPath);
+      	if(stats.isDirectory()){
+      		deleteFileRecursively(delPath);
+      	} else {
+      		if(['.mp3', '.webm'].includes(path.extname(file))){
+        		fs.unlinkSync(delPath);
+      		}
+        	console.log(`${sessionId}内のファイルを削除しました`)
       	}
-        console.log(`${sessionId}内のファイルを削除しました`)
-      }
-    });
+    	});
+    }
     req.session.output = [];
     const checkInfo = spawn("python3", ["info.py", url]);
     checkInfo.stdout.on("data", (data) => {
