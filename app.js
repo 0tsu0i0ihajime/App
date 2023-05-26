@@ -298,6 +298,7 @@ app.get("/play", (req, res) => {
       	if(['.mp3', '.webm'].includes(path.extname(file))){
         	fs.unlinkSync(delPath);
       	}
+        console.log(`${sessionId}内のファイルを削除しました`)
       }
     });
     req.session.output = [];
