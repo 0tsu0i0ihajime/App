@@ -54,17 +54,19 @@ app.post("/login", (req, res) => {
         );
         return;
     }
-
-    if (username && password) {
-        if (users[username] === password) {
-            req.session.username = username;
-            const uniqueKey = `${username}:${password}`;
-            const sessionID = crypto
-                .createHash("sha256")
-                .update(uniqueKey)
-                .digest("hex");
-            res.cookie("sessionId", sessionID);
-            res.sendFile(path.join(__dirname, "public", "stream.html"));
+    if(username && password){
+        if(users.includes(username)){
+            pass = process.env[`${username}_pass`];
+            if(pass === password){
+                req.session.username = username;
+                const uniqueKey = `${username}:${password}`;
+                const sessionID = crypto.createHash("sha256").update(uniqueKey).digest("hex");
+                res.cookie("sessionId", sessionID);
+                res.sendFile(path.join(__dirname, "public", "stream.html"));
+            } else {
+                res.redirect("/");
+                return;
+            }
         } else {
             res.redirect("/");
             return;
