@@ -193,10 +193,8 @@ app.get("/send", (req, res) => {
                 nextDl.on("close", (code) => {
                     console.log(`yt-dlp process exited with code ${code}`);
                     try {
-                        fs.unlinkSync(filepath)
-                        console.log(`${filepath}を削除しました。`)
                         let next = outputData.trim().split("\n").slice(-2, -1)[0].substring(targetString.length);
-                        jsonData.fileName = next;
+                        jsonData.nextFileName = next;
                     } catch {
                         console.error(err)
                     }
