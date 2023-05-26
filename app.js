@@ -212,10 +212,14 @@ app.get("/send", (req, res) => {
 });
 
 app.post("/song-end", (req, res) => {
+    const targetString = "[ExtractAudio] Destination: ";
     const { sessionId } = req.cookies;
-    const Tar = path.join(__dirname, 'public', sessionId, 'send.html')
+    const delNumber = req.session.Number;
+    const tarNumber = delNumber + 1;
+    const Tar = path.join(__dirname, 'public', sessionId, `send${tarNumber}.html`)
     const jsonPath = path.join(__dirname, 'public', sessionId, 'data.json'); 
     const jsonData = JSON.parse(jsonPath);
+    const filePath = jsonData.nextFileName;
     const content = `<!DOCTYPE html>
         <html lang="ja">
         
