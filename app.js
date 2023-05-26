@@ -110,7 +110,7 @@ app.get("/send", (req, res) => {
         jsonData.fileName = filepath;
         const nextUrl = json.url.replace(/'/g, '"')[tarNumber];
         const audioPath = filepath.replace(/^public\/[^/]+\//, './.data/');
-        const Tar = path.join(__dirname, 'public', sessionId, 'send.html');
+        const Tar = path.join(__dirname, 'public', sessionId, `send${req.session.Number}.html`);
         let outputData = []
         const args = [
             "-o",
@@ -296,7 +296,7 @@ app.get("/play", (req, res) => {
       	if(stats.isDirectory()){
       		deleteFileRecursively(delPath);
       	} else {
-      		if(['.mp3', '.webm'].includes(path.extname(file))){
+      		if(['.mp3', '.webm', '.html'].includes(path.extname(file))){
         		fs.unlinkSync(delPath);
       		}
         	console.log(`${sessionId}内のファイルを削除しました`)
