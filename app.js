@@ -27,9 +27,6 @@ fs.watch("username.json", (event, filename) => {
         users = JSON.parse(fs.readFileSync("username.json", "utf8"));
     }
 });
-let pass = []
-for i in range(len(users)):
-	pass[i] = process.env[`$(users[i])_pass`]
 app.use(
     session({
         secret: "My Secret Key: Common",
