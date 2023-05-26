@@ -23,10 +23,12 @@ const app = express();
 fs.watch("pass.json", (event, filename) => {
     if (event === "change") {
         console.log(`${filename}change!`);
-        users = JSON.parse(fs.readFileSync("pass.json", "utf8"));
+        users = JSON.parse(fs.readFileSync("username.json", "utf8"));
     }
 });
-
+let pass = []
+for i in range(len(users)):
+	pass[i] = process.env[`$(users[i])_pass]
 app.use(
     session({
         secret: "My Secret Key: Common",
