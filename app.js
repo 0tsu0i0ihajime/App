@@ -6,8 +6,9 @@ const express = require("express"),
     fs = require("fs"),
     { spawn } = require("child_process"),
     crypto = require("crypto"),
-    { spawnSync } = require("child_process"),
-    require('dotenv').config();
+    { spawnSync } = require("child_process");
+
+require('dotenv').config();
 
 const download = spawnSync("pip3", ["install", "yt-dlp"]);
 if (download.error) {
