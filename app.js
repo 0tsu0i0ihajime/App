@@ -225,6 +225,7 @@ app.post("/song-end", (req, res) => {
     const jsonPath = path.join(__dirname, 'public', sessionId, 'data.json'); 
     const jsonData = JSON.parse(jsonPath);
     const filePath = jsonData.nextFileName;
+    jsonData.fileName = filePath;
     const nextUrl = jsonData.url.replace(/'/g, '"')[tarNumber];
     const audioPath = filePath.replace(/^public\/[^/]+\//, './.data/');
     let outputData;
@@ -303,8 +304,24 @@ app.post("/song-end", (req, res) => {
             console.log(`stdout: ${data}`);
             outputData += data.toString();
         	});
-        res.sendFile(Tar);
-    } catch (err) {
+          nextDl.stderr.on("data", (data)=>{
+            console.log(`stderr: ${data}`);
+          });
+          nextDl.on("close", (code)=>{
+            console.log(`yt-dlp process exited with code ${code}`);
+            try{
+              let next = outputData.trim().split("\n").slice(-2, -1)[0].substring(targetString.length);
+              jsonData.nextFileName = next;
+            } catch {
+              console.error(err)
+            }
+        	});
+        } else {
+          req.session.Number = 'end';
+        	res.sendFile(Tar);
+          return;
+        }
+   	} catch (err) {
         console.log(err)
         res.send(err)
         return
