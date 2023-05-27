@@ -111,7 +111,8 @@ app.get("/send", (req, res) => {
         const nextUrl = jsonData.url.replace(/'/g, '"')[tarNumber];
         const audioPath = filepath.replace(/^public\/[^/]+\//, './.data/');
         const Tar = path.join(__dirname, 'public', sessionId, `send${tarNumber}.html`);
-        let outputData = []
+        //let outputData = []
+				let outputData;
         const args = [
             "-o",
             `public/${sessionId}/.data/%(title)s.%(ext)s`,
@@ -200,7 +201,8 @@ app.get("/send", (req, res) => {
                     }
                 });
             }else{
-                res.send('end');
+              req.session.Number = 'end';
+            		res.sendFile(Tar);
                 return
             }
         } catch (err) {
@@ -214,12 +216,27 @@ app.get("/send", (req, res) => {
 app.post("/song-end", (req, res) => {
     const targetString = "[ExtractAudio] Destination: ";
     const { sessionId } = req.cookies;
+    if(req.session.Number == 'end'){
+      res.send('end');
+      return
+  	}
     const delNumber = req.session.Number;
     const tarNumber = delNumber + 1;
     const Tar = path.join(__dirname, 'public', sessionId, `send${tarNumber}.html`)
     const jsonPath = path.join(__dirname, 'public', sessionId, 'data.json'); 
     const jsonData = JSON.parse(jsonPath);
     const filePath = jsonData.nextFileName;
+    const nextUrl = jsonData.url.replace(/'/g, '"')[tarNumber];
+    const audioPath = filePath.replace(/^public\/[^/]+\//, './.data/');
+    const outputData = [];
+    const args = [
+      "-o",
+      `public/${sessionId}/.data/%(title)s.%(ext)s`,
+      "--extract-audio",
+      "--audio-format",
+      "mp3",
+      nextUrl
+    ]
     const content = `<!DOCTYPE html>
         <html lang="ja">
         
@@ -279,6 +296,14 @@ app.post("/song-end", (req, res) => {
     try {
         fs.writeFileSync(Tar, content);
         console.log(`${Tar}を保存しました`);
+        if(nextUrl){
+          const nextDl = spawn("yt-dlp", args);
+          req.session.Number = tarNumber;
+          res.sendFile(Tar);
+          nextDl.stdout.on("data", (data)=>{
+            console.log(`stdout: ${data}`);
+            outputData += data.toString();
+        	});
         res.sendFile(Tar);
     } catch (err) {
         console.log(err)
