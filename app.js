@@ -111,8 +111,7 @@ app.get("/send", (req, res) => {
         const nextUrl = jsonData.url.replace(/'/g, '"')[tarNumber];
         const audioPath = filepath.replace(/^public\/[^/]+\//, './.data/');
         const Tar = path.join(__dirname, 'public', sessionId, `send${tarNumber}.html`);
-        //let outputData = []
-				let outputData;
+        let outputData;
         const args = [
             "-o",
             `public/${sessionId}/.data/%(title)s.%(ext)s`,
@@ -228,7 +227,7 @@ app.post("/song-end", (req, res) => {
     const filePath = jsonData.nextFileName;
     const nextUrl = jsonData.url.replace(/'/g, '"')[tarNumber];
     const audioPath = filePath.replace(/^public\/[^/]+\//, './.data/');
-    const outputData = [];
+    let outputData;
     const args = [
       "-o",
       `public/${sessionId}/.data/%(title)s.%(ext)s`,
